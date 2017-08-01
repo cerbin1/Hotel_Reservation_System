@@ -1,14 +1,11 @@
 package hotel;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,15 +13,26 @@ import javafx.stage.Stage;
 public class MainPanel extends Application {
     private Scene addingGuest;
     private Scene main;
+    private TableView table;
+
+    private Scene tableOfGuests = new Scene(new Group());
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         VBox vBox = new VBox();
-        Button addGuestButton = new Button("Add a guest");
-        addGuestButton.setOnAction((ActionEvent event) -> changeSceneToAddGuest(primaryStage));
-        vBox.getChildren().add(addGuestButton);
         vBox.setAlignment(Pos.CENTER);
+
+        Button addGuestButton = new Button("Add a guest");
+        addGuestButton.setOnAction(event -> changeSceneToAddGuest(primaryStage));
+        vBox.getChildren().add(addGuestButton);
+
+        createGuestsTable();
+        Button showClients = new Button("Show clients");
+        showClients.setOnAction(event -> {
+            primaryStage.setScene(tableOfGuests);
+        });
+        vBox.getChildren().add(showClients);
+
         main = new Scene(vBox, 500, 500);
 
         GridPane gridPane = new GridPane();
@@ -81,6 +89,21 @@ public class MainPanel extends Application {
         primaryStage.setScene(main);
         primaryStage.show();
     }
+
+    private void createGuestsTable() {
+        table = new TableView();
+        table.setEditable(false);
+
+        TableColumn name = new TableColumn("Name");
+        TableColumn surname = new TableColumn("Name");
+        TableColumn age = new TableColumn("Name");
+        table.getColumns().addAll(name, surname, age);
+
+        VBox vbox = new VBox();
+        vbox.getChildren().add(table);
+        ((Group) tableOfGuests.getRoot()).getChildren().add(vbox);
+    }
+
 
     private void changeSceneToAddGuest(Stage primaryStage) {
         primaryStage.setScene(addingGuest);
