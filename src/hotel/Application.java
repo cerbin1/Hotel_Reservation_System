@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Application {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/hotel";
+        String url = "jdbc:mysql://localhost:3306/hotel?useSSL=false";
         String login = "root";
         String password = "root";
         try {
